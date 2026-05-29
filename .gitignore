@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+data/processed/
+web/charts/
+web/data.json
+uploads/
+.DS_Store
+Thumbs.db
+_analise.py
+_resumo.py
+
