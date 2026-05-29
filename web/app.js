@@ -484,18 +484,20 @@ const fileInput = document.getElementById('fileInput');
 const statusEl = document.getElementById('uploadStatus');
 const resultEl = document.getElementById('uploadResult');
 
-dz.addEventListener('click', () => fileInput.click());
-fileInput.addEventListener('change', e => uploadFiles(e.target.files));
+if (dz && fileInput) {
+  dz.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', e => uploadFiles(e.target.files));
 
-['dragenter','dragover'].forEach(ev => dz.addEventListener(ev, e => {
-  e.preventDefault(); dz.classList.add('drop-active');
-}));
-['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => {
-  e.preventDefault(); dz.classList.remove('drop-active');
-}));
-dz.addEventListener('drop', e => uploadFiles(e.dataTransfer.files));
+  ['dragenter','dragover'].forEach(ev => dz.addEventListener(ev, e => {
+    e.preventDefault(); dz.classList.add('drop-active');
+  }));
+  ['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => {
+    e.preventDefault(); dz.classList.remove('drop-active');
+  }));
+  dz.addEventListener('drop', e => uploadFiles(e.dataTransfer.files));
+}
 
-document.getElementById('btnReset').addEventListener('click', resetAll);
+document.getElementById('btnReset')?.addEventListener('click', resetAll);
 
 // Period switcher (Daily / Weekly / Monthly)
 document.getElementById('periodSwitch')?.addEventListener('click', e => {
@@ -549,12 +551,14 @@ async function resetAll() {
 }
 
 function setStatus(msg, kind) {
+  if (!statusEl) return;
   const colors = { loading: 'text-brand-400', ok: 'text-emerald-400', error: 'text-rose-400' };
   statusEl.className = `text-xs ${colors[kind] || 'text-slate-400'}`;
   statusEl.textContent = msg;
 }
 
 function renderUploadResult(data) {
+  if (!resultEl) return;
   resultEl.classList.remove('hidden');
   const fieldOrder = ['cliente','cnpj','uf','data','ean','produto','valor','qtd','canal'];
   const blocks = Object.entries(data.mappings).map(([file, info]) => {
