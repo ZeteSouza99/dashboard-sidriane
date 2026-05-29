@@ -12,6 +12,7 @@ import tempfile
 from pathlib import Path
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 from pipeline import etl, analytics
 from pipeline.config import WEB_DIR, PROCESSED_DIR
@@ -77,7 +78,7 @@ def render_dashboard(data: dict, height: int = 4200):
         f"<script>window.DASHBOARD_DATA = {json.dumps(data, ensure_ascii=False)};</script>"
         f"<script>{js}</script>",
     )
-    st.iframe(srcdoc=html, height=height, scrolling=True)
+    components.html(html, height=height, scrolling=True)
 
 
 # ---------------------- UI ----------------------
