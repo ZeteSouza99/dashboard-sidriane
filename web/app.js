@@ -17,6 +17,11 @@ const charts = {}; // instâncias para destroy ao re-render
 async function loadAndRender() {
   // Streamlit embed: dados injetados via window.DASHBOARD_DATA
   if (window.DASHBOARD_DATA) {
+    // Esconde a UI interna de upload/reset (o Streamlit cuida disso)
+    const upSection = document.getElementById('upload');
+    if (upSection) upSection.style.display = 'none';
+    const navUp = document.querySelector('a[href="#upload"], [data-nav="upload"]');
+    if (navUp) navUp.style.display = 'none';
     const data = window.DASHBOARD_DATA;
     if (data.empty) { renderEmpty(data.meta); return; }
     renderAll(data);
