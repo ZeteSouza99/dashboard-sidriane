@@ -68,6 +68,23 @@ def render_dashboard(data: dict, height: int = 4200):
     css = _read_static("styles.css")
     js = _read_static("app.js")
 
+    # remove a section interna de upload (o Streamlit cuida do upload)
+    import re
+    html = re.sub(
+        r'<!-- Upload -->\s*<section id="upload".*?</section>',
+        '',
+        html,
+        count=1,
+        flags=re.DOTALL,
+    )
+    # remove o link "Importar planilhas" da sidebar (href="#upload")
+    html = re.sub(
+        r'<a[^>]*href="#upload"[^>]*>.*?</a>',
+        '',
+        html,
+        flags=re.DOTALL,
+    )
+
     # remove tags externas e injeta tudo inline + dados
     html = html.replace(
         '<link rel="stylesheet" href="styles.css">',
